@@ -9,7 +9,7 @@ parser.add_argument('-m', metavar='--maxZVal', type=int, default=20, help='the m
 parser.add_argument('-o', metavar='--output', type=str, default='result.obj', help='Name of the resulting .obj file')
 args = parser.parse_args()
 
-target_size = (args.wi,args.he)
+target_size = (args.he,args.wi)
 imgName = args.imageName
 maxHeight = args.m
 outputName = args.o        
@@ -51,7 +51,7 @@ squareList = []
 
 img = cv2.imread(imgName, cv2.IMREAD_COLOR)
 gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-resize_img = cv2.resize(gray_img, target_size)
+resize_img = cv2.resize(gray_img, (target_size[1],target_size[0]))
 
 base_height = 10
 idxCnt = 0
