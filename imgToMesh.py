@@ -6,13 +6,15 @@ parser.add_argument('imageName', metavar='imageName', type=str, help='name of th
 parser.add_argument('-wi', metavar='--width', type=int, default=32, help='the width of the 2D pilar array')
 parser.add_argument('-he', metavar='--height', type=int, default=32, help='the height of the 2D pilar array')
 parser.add_argument('-m', metavar='--maxZVal', type=int, default=20, help='the maximum height of the pilar. The heights of the pilars will be scaled accordingly.')
+parser.add_argument('-b', metavar='--baseHeight', type=int, default=5, help='height of the base below the pilar array')
 parser.add_argument('-o', metavar='--output', type=str, default='result.obj', help='Name of the resulting .obj file')
 args = parser.parse_args()
 
 target_size = (args.he,args.wi)
 imgName = args.imageName
 maxHeight = args.m
-outputName = args.o        
+outputName = args.o
+baseHeight = args.b
 
 class Pilar:
     def __init__(self,zVal,leftTopIdx,rightTopIdx,leftBottomIdx,rightBottomIdx):
@@ -59,7 +61,7 @@ for i in range(target_size[0]):
     rowPilar = []
     for j in range(target_size[1]):
         zVal = resize_img[i][j]/255*maxHeight
-        newCorners = generateFourCorners(i,j,zVal)
+        newCorners = generateFourCorners(i,j,zVal+baseHeight)
         vertexList.extend(newCorners)
         newPilarObj = Pilar(zVal,idxCnt,idxCnt+1,idxCnt+2,idxCnt+3)
         idxCnt+=4
